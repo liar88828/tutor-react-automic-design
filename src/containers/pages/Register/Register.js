@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './register.scss'
-import {apps} from '../../../config/firebase/index'
+import {apps} from '../../../config/firebase/Firebase'
 import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 
 class Register extends Component {
