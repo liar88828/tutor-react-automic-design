@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import './register.scss'
-import {apps} from '../../../config/firebase/Firebase'
-import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
+import {Button} from "../../../components/atoms/Button";
+import {registerUserApi} from "../../../config/redux/action";
+import {connect} from "react-redux";
 
 class Register extends Component {
-
-
 	state = {
 		email: '',
-		password: ''
+		password: '',
+		// loading: false  // test
 	}
 
 	handleChangeText = (e) => {
@@ -19,26 +19,32 @@ class Register extends Component {
 	}
 
 	handleChangeSubmit = () => {
-		// console.log("email : ", this.state.email)
-		// console.log('password : ', this.state.password)
-
 		const {email, password} = this.state
-		const auth = getAuth(apps);
-		createUserWithEmailAndPassword(auth, email, password)
-			.then((userCredential) => {
-				// Signed in
-				// const user = userCredential.user;
-				console.log('success :', userCredential)
-
-
-				// ...
-			})
-			.catch((error) => {
-				console.log(error)
-				// const errorCode = error.code;
-				// const errorMessage = error.message;
-				// ..
-			});
+		this.props.registerApi({email, password})
+//-------------------------------------------
+		// console.log('data send : ', email, password)
+		// this.setState({loading: true})
+		//
+		// setTimeout(() => {
+		// 	this.setState({
+		// 		loading: false
+		// 	})
+		// }, 5000)
+//---------------------------------------
+		// const auth = getAuth(apps);
+		// createUserWithEmailAndPassword(auth, email, password)
+		// 	.then((userCredential) => {
+		// 		// Signed in
+		// 		// const user = userCredential.user;
+		// 		console.log('success :', userCredential)
+		// 		// ...
+		// 	})
+		// 	.catch((error) => {
+		// 		console.log(error)
+		// 		// const errorCode = error.code;
+		// 		// const errorMessage = error.message;
+		// 		// ..
+		// 	});
 	}
 
 	render() {
@@ -61,14 +67,26 @@ class Register extends Component {
 					       onChange={this.handleChangeText}
 
 					/>
-					<button
-						className='btn'
-						onClick={this.handleChangeSubmit}>Register
-					</button>
+					<Button
+						onClick={this.handleChangeSubmit}
+						title={"Register"}
+						// loading={this.state.loading}
+						isLoading={this.props.isLoading}
+					/>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default Register
+const reduxState = (state) => ({ // harus ada ( dan {
+	isLoading: state.isLoading
+})
+
+const reduxDispatch = (dispatch) => ({
+	registerApi: (data) => {
+		dispatch(registerUserApi(data))
+	}
+})
+
+export default connect(reduxState, reduxDispatch)(Register)

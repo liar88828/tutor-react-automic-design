@@ -12,10 +12,7 @@ class Login extends Component {
 		return (
 			<div>
 				<h1>Login Page {this.props.userName}</h1>
-				{/*<button>Go to Register</button>*/}
-				<button onClick={this.changeUser}>
-					ganti nama
-				</button>
+				<button onClick={this.changeUser}> ganti nama</button>
 				<button>Go to Dashboard</button>
 			</div>
 		);
@@ -26,7 +23,6 @@ const reduxState = (state) => ({
 	popupProps: state.popup,
 	userName: state.user
 })
-
 
 
 const reduxDispatch = (dispatch) => ({
