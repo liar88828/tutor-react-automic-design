@@ -6,13 +6,10 @@ import {connect} from "react-redux";
 
 class Register extends Component {
 	state = {
-		email: '',
-		password: '',
-		// loading: false  // test
+		email: '', password: '',
 	}
 
 	handleChangeText = (e) => {
-		// console.log(e.target.id)// log id
 		this.setState({
 			[e.target.id]: e.target.value,
 		})
@@ -21,43 +18,21 @@ class Register extends Component {
 	handleChangeSubmit = () => {
 		const {email, password} = this.state
 		this.props.registerApi({email, password})
-//-------------------------------------------
-		// console.log('data send : ', email, password)
-		// this.setState({loading: true})
-		//
-		// setTimeout(() => {
-		// 	this.setState({
-		// 		loading: false
-		// 	})
-		// }, 5000)
-//---------------------------------------
-		// const auth = getAuth(apps);
-		// createUserWithEmailAndPassword(auth, email, password)
-		// 	.then((userCredential) => {
-		// 		// Signed in
-		// 		// const user = userCredential.user;
-		// 		console.log('success :', userCredential)
-		// 		// ...
-		// 	})
-		// 	.catch((error) => {
-		// 		console.log(error)
-		// 		// const errorCode = error.code;
-		// 		// const errorMessage = error.message;
-		// 		// ..
-		// 	});
+		this.setState({
+			email: '', password: ''
+		})
 	}
 
 	render() {
-		return (
-			<div className='auth-container'>
+		return (<div className='auth-container'>
 				<div className='auth-card'>
-					<h1>Register</h1>
 					<h1 className='aunt-title'>Register Page </h1>
 					<input type='text'
 					       id='email'
 					       placeholder='Email'
 					       className='input'
 					       onChange={this.handleChangeText}
+					       value={this.state.email}
 
 					/>
 					<input type='password'
@@ -65,17 +40,15 @@ class Register extends Component {
 					       placeholder='Password'
 					       className='input'
 					       onChange={this.handleChangeText}
-
+					       value={this.state.password}
 					/>
 					<Button
 						onClick={this.handleChangeSubmit}
 						title={"Register"}
-						// loading={this.state.loading}
-						isLoading={this.props.isLoading}
+						loading={this.props.isLoading}
 					/>
 				</div>
-			</div>
-		);
+			</div>);
 	}
 }
 
